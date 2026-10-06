@@ -21,8 +21,6 @@ These encouraging results make this release a practical starting point for explo
 | Structured translation meaning/slots |16/16|
 | Supplied habitat fields |8/8 core;7/8 requested-only|
 | Tiny English retention |6/6 normalized|
-| Gujarati arithmetic |8/12|
-| English arithmetic |8/12|
 
 Final training loss:0.0178173711. Final validation loss (122-example development fixture):0.2046867821; matched base:0.4505630165. Separate 48-example development loss:0.0742802848; matched base:0.7192907749. Native BF16 completion-token-weighted causal NLL including EOT, same base/collator, batch4; measured in a separate zero-optimizer A10080GB evaluation of unchanged final weights.
 
@@ -40,7 +38,7 @@ The code repository records the recipe. Private input bundles, credentials, runt
 
 Accept Meta's licence and obtain access to `meta-llama/Llama-3.1-8B-Instruct`. Use the verified PyTorch 2.6.0/CUDA12.4 image and `pip install -r requirements-gpu.txt` from the code repository. The example loads native BF16 on a compatible CUDA GPU; quantized inference can change results and is not the final measured configuration.
 
-`python inference.py 'ગુજરાતીમાં ટૂંકો જવાબ આપો.' --adapter-revision 15c3c213a66d5816ebf327019f6c71fad3f9afa6`
+`python inference.py 'ગુજરાતીમાં ટૂંકો જવાબ આપો.' --adapter-revision ed38be6643a3f7d5f94cee9b12c09aa54cddee51`
 
 Base revision: `0e9e39f249a16976918f6564b8830bc894c89659`. Adapter SHA256: `150c261d6b05e2f40efe01b131b29283ed527278d5cdcdb56f19f6a3e90081e2`. Verify package files with `SHA256SUMS`. This is a LoRA adapter; the base model is required separately.
 
@@ -67,4 +65,4 @@ For exact arithmetic, an application can validate the quantities and operation, 
 
 The adapter and Meta tokenizer follow the Llama 3.1 Community License and Acceptable Use Policy. Retain LICENSE/NOTICE/USE_POLICY.md. Original project code uses MIT; Meta materials are in model-license/ in the code repository. No institutional or source-publisher endorsement is implied.
 
-Pinned public adapter revision: `15c3c213a66d5816ebf327019f6c71fad3f9afa6`. See `release.json`.
+Pinned public adapter revision: `ed38be6643a3f7d5f94cee9b12c09aa54cddee51`. See `release.json`.
