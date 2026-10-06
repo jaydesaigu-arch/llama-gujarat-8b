@@ -1,0 +1,27 @@
+{
+  "passed": false,
+  "counts": {
+    "math_exact": {
+      "total": 12,
+      "passed": 8
+    },
+    "english_math_exact": {
+      "total": 12,
+      "passed": 8
+    },
+    "translation_en_gu": {
+      "total": 8,
+      "passed": 8
+    },
+    "translation_gu_en": {
+      "total": 8,
+      "passed": 8
+    },
+    "source_grounded_followup": {
+      "total": 8,
+      "passed": 8
+    }
+  },
+  "retention_normalized": 6,
+  "screening_only": true
+}

@@ -1,0 +1,60 @@
+{
+  "stages": [
+    {
+      "stage": "clean",
+      "examples": 1534,
+      "epochs": 1,
+      "learning_rate": 2e-05
+    },
+    {
+      "stage": "refinement",
+      "examples": 4454,
+      "epochs": 2,
+      "learning_rate": 5e-05
+    },
+    {
+      "stage": "bridge",
+      "examples": 5818,
+      "epochs": 1,
+      "learning_rate": 3e-05
+    },
+    {
+      "stage": "terminology",
+      "examples": 2750,
+      "epochs": 1,
+      "learning_rate": 1e-05
+    },
+    {
+      "stage": "coverage",
+      "examples": 4802,
+      "epochs": 1,
+      "learning_rate": 2e-05
+    },
+    {
+      "stage": "transfer",
+      "examples": 10754,
+      "epochs": 1,
+      "learning_rate": 1e-05
+    },
+    {
+      "stage": "gujarati-arithmetic",
+      "examples": 12394,
+      "epochs": 1,
+      "learning_rate": 1e-05
+    }
+  ],
+  "counts_include_replay": true,
+  "last_two_stages_native_bf16": true,
+  "earlier_stages_qlora_nf4": true,
+  "final_stage_batch": 4,
+  "final_stage_gradient_accumulation": 4,
+  "lora_rank": 16,
+  "lora_alpha": 32,
+  "lora_dropout": 0.05,
+  "context": 2048,
+  "completion_only_loss": true,
+  "seed": 42,
+  "final_optimizer_steps": 775,
+  "final_completed_epochs": 1.0,
+  "raw_private_training_bundles_included": false
+}

@@ -1,0 +1,47 @@
+{
+  "adapter_sha256": "150c261d6b05e2f40efe01b131b29283ed527278d5cdcdb56f19f6a3e90081e2",
+  "base_revision": "0e9e39f249a16976918f6564b8830bc894c89659",
+  "weights_unchanged": true,
+  "optimizer_steps": 0,
+  "training_performed": false,
+  "generations": 0,
+  "pipeline": "Native BF16, same pinned base, adapter disabled versus selected adapter, exact original encode/collate/matched functions, shifted completion-token weighted causal NLL including EOT, batch4, no optimizer or generations",
+  "hardware": "A10080GB evaluation; final generation/training were H200141GB",
+  "dataset_sha256": {
+    "development-regression": "ed55406d5a37dce294e0a5019e030bb4947441185aa82a67529ed8bea6b49045",
+    "early-development": "8039dbdb020da9acb276dc4bbff35b230908e530789f5fc94879fb7333a20e97"
+  },
+  "losses": {
+    "development-regression": {
+      "pipeline": "Native BF16 same collator and completion-only labels, causal shift; batch4 mean loss weighted by scored completion token counts including EOT. Base uses disabled adapter on the same pinned native base.",
+      "measurements": {
+        "base": {
+          "completion_token_nll": 0.4505630165338516,
+          "completion_tokens": 2680,
+          "examples": 122
+        },
+        "adapter": {
+          "completion_token_nll": 0.20468678206866503,
+          "completion_tokens": 2680,
+          "examples": 122
+        }
+      }
+    },
+    "early-development": {
+      "pipeline": "Native BF16 same collator and completion-only labels, causal shift; batch4 mean loss weighted by scored completion token counts including EOT. Base uses disabled adapter on the same pinned native base.",
+      "measurements": {
+        "base": {
+          "completion_token_nll": 0.7192907748554496,
+          "completion_tokens": 1249,
+          "examples": 48
+        },
+        "adapter": {
+          "completion_token_nll": 0.07428028483131678,
+          "completion_tokens": 1249,
+          "examples": 48
+        }
+      }
+    }
+  },
+  "scope": "Authored and previously inspected development fixtures, with task families shared with training; not an independent benchmark. Final adapter generation accuracy on48 remains unchanged."
+}
