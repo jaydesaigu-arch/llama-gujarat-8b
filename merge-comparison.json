@@ -1,0 +1,44 @@
+[
+  {
+    "id": "guarith-new-transfer-development-trans-en-0",
+    "prompt": [
+      {
+        "role": "user",
+        "content": "Translate into Gujarati: From the cupboard, please hand 3839 pens to me."
+      }
+    ],
+    "reference": "કૃપા કરીને કબાટમાંથી ૩૮૩૯ પેન મને આપો.",
+    "adapter_answer": "કૃપા કરીને કબાટમાંથી ૩૮૩૯ પેન મને આપો.",
+    "merged_answer": "કૃપા કરીને કબાટમાંથી ૩૮૩૯ પેન મને આપો.",
+    "maximum_first_token_logit_difference": 0.484375,
+    "first_token_argmax_agrees": true
+  },
+  {
+    "id": "guarith-new-transfer-development-trans-gu-0",
+    "prompt": [
+      {
+        "role": "user",
+        "content": "અંગ્રેજીમાં અનુવાદ કરો: કૃપા કરીને કબાટમાંથી ૩૮૩૯ પેન મને આપો."
+      }
+    ],
+    "reference": "From the cupboard, please hand 3839 pens to me.",
+    "adapter_answer": "From the cupboard, please hand 3839 pens to me.",
+    "merged_answer": "From the cupboard, please hand 3839 pens to me.",
+    "maximum_first_token_logit_difference": 0.28125,
+    "first_token_argmax_agrees": true
+  },
+  {
+    "id": "guarith-new-transfer-development-source-0",
+    "prompt": [
+      {
+        "role": "user",
+        "content": "કલ્પિત નોંધ: વિસ્તાર ૯૮૦૧માં રેતીના ઢગલા અને કાદવવાળી જમીન છે. ત્યાં પક્ષીઓ છે. ફક્ત નોંધ પરથી નિવાસસ્થાનનાં બંને પ્રકાર લખો."
+      }
+    ],
+    "reference": "રેતીના ઢગલા અને કાદવવાળી જમીન.",
+    "adapter_answer": "રેતીના ઢગલા અને કાદવવાળી જમીન. ત્યાં પક્ષીઓ છે.",
+    "merged_answer": "રેતીના ઢગલા અને કાદવવાળી જમીન. ત્યાં પક્ષીઓ છે.",
+    "maximum_first_token_logit_difference": 0.435546875,
+    "first_token_argmax_agrees": true
+  }
+]

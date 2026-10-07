@@ -2,7 +2,7 @@
 
 **Bringing Gujarati into the AI conversation.** Created by **Dr. Jay Desai**. Built with Llama, using Meta Llama 3.1 8B Instruct.
 
-A Gujarati language research adapter for instruction following, translation and supplied-context questions. Explore the model, inspect its answer examples and help improve Gujarati AI.
+A standalone Gujarati language research model for instruction following, translation and supplied-context questions. Full BF16 weights and the original LoRA adapter are both available. Explore the model, inspect its answer examples and help improve Gujarati AI.
 
 Model: https://huggingface.co/DesaiJayM/Llama-Gujarat-8B
 Code: https://github.com/jaydesaigu-arch/llama-gujarat-8b
@@ -32,15 +32,41 @@ The original test outcomes remain recorded, including failed screens. This relea
 
 Seven stages: clean:1epoch at2e-5; refinement:2epochs at5e-5; bridge:1epoch at3e-5; terminology:1epoch at1e-5; coverage:1epoch at2e-5; transfer:1epoch at1e-5; Gujarati arithmetic:1epoch at1e-5. The first five used NF4 QLoRA; the last two continued the saved adapter with native BF16 and fresh optimizers. The final 12,394-row stage added Gujarati carry/borrow/column multiplication/percentage explanations and numeral conversion, with English and non-math replay. Final 775 optimizer steps/full epoch. Counts include replay and are not unique-example totals. Groundnut is correctly both a legume and an oilseed crop.
 
-The code repository records the recipe. Private input bundles, credentials, runtime/account logs, base weights and earlier unsuccessful adapters are excluded from this public package.
+The code repository records the recipe. Private input bundles, credentials, runtime/account logs and earlier unsuccessful adapters are excluded from this public package.
 
-## Use
+## Download and use full weights
 
-Accept Meta's licence and obtain access to `meta-llama/Llama-3.1-8B-Instruct`. Use the verified PyTorch 2.6.0/CUDA12.4 image and `pip install -r requirements-gpu.txt` from the code repository. The example loads native BF16 on a compatible CUDA GPU; quantized inference can change results and is not the final measured configuration.
+The root of this repository contains the complete standalone BF16 model: four weight shards, model configuration and tokenizer. Download size is about **16.1 GB**. No separate base-model download or PEFT adapter loader is needed for this version. The original adapter remains in `adapter/`; its previous release is also preserved at commit `ed38be6643a3f7d5f94cee9b12c09aa54cddee51`.
 
-`python inference.py 'ગુજરાતીમાં ટૂંકો જવાબ આપો.' --adapter-revision ed38be6643a3f7d5f94cee9b12c09aa54cddee51`
+```python
+import torch
+from transformers import AutoModelForCausalLM, AutoTokenizer
 
-Base revision: `0e9e39f249a16976918f6564b8830bc894c89659`. Adapter SHA256: `150c261d6b05e2f40efe01b131b29283ed527278d5cdcdb56f19f6a3e90081e2`. Verify package files with `SHA256SUMS`. This is a LoRA adapter; the base model is required separately.
+repo = "DesaiJayM/Llama-Gujarat-8B"
+tokenizer = AutoTokenizer.from_pretrained(repo)
+model = AutoModelForCausalLM.from_pretrained(
+    repo, torch_dtype=torch.bfloat16, device_map="auto",
+    attn_implementation="sdpa",
+).eval()
+inputs = tokenizer.apply_chat_template(
+    [{"role": "user", "content": "ગુજરાતીમાં ટૂંકો જવાબ આપો."}],
+    add_generation_prompt=True, return_dict=True, return_tensors="pt",
+).to(model.device)
+with torch.inference_mode():
+    output = model.generate(**inputs, max_new_tokens=192, do_sample=False,
+                            pad_token_id=tokenizer.eos_token_id)
+print(tokenizer.decode(output[0, inputs["input_ids"].shape[1]:], skip_special_tokens=True))
+```
+
+For reproducible downloads, pin the verified release commit recorded in the code repository's `release.json`. Use the pinned requirements from that repository and a compatible BF16 GPU. A CPU/offload deployment needs sufficient memory and may be slow. Quantized inference can change results.
+
+### Conversion provenance
+
+These full weights merge the exact published LoRA adapter into Meta Llama 3.1 8B Instruct with official PEFT 0.17.1 `merge_and_unload(safe_merge=True)`. This is a **merged LoRA checkpoint**, not a new full-parameter training run. No optimizer steps were taken during conversion. Base revision: `0e9e39f249a16976918f6564b8830bc894c89659`. Original adapter SHA256: `150c261d6b05e2f40efe01b131b29283ed527278d5cdcdb56f19f6a3e90081e2`.
+
+All 291 expected model tensors are present, all 224 LoRA linear layers were merged, and saved tensors were checked for finite values. The saved standalone model was reloaded and three translation/context probes were compared with the separate base-plus-adapter configuration. See `merge-provenance.json`, `merge-comparison.json` and `SHA256SUMS`. BF16 merging involves rounding; the earlier 48-answer scores and validation losses below describe the separate base-plus-adapter configuration, rather than a new full evaluation of the merged checkpoint.
+
+To use only the compact adapter, load the pinned Meta base and `PeftModel.from_pretrained(base, repo, subfolder="adapter")`; base access and a separate base download are required for that option. Follow Meta's Llama 3.1 licence and acceptable use policy for both downloads.
 
 ## Arithmetic in context
 
@@ -63,6 +89,6 @@ For exact arithmetic, an application can validate the quantities and operation, 
 
 ## Licence
 
-The adapter and Meta tokenizer follow the Llama 3.1 Community License and Acceptable Use Policy. Retain LICENSE/NOTICE/USE_POLICY.md. Original project code uses MIT; Meta materials are in model-license/ in the code repository. No institutional or source-publisher endorsement is implied.
+The merged weights, adapter and tokenizer follow the Llama 3.1 Community License and Acceptable Use Policy. Retain LICENSE/NOTICE/USE_POLICY.md. Original project code uses MIT; Meta materials are in model-license/ in the code repository. No institutional or source-publisher endorsement is implied.
 
-Pinned public adapter revision: `ed38be6643a3f7d5f94cee9b12c09aa54cddee51`. See `release.json`.
+Pinned full-model revision: `731b42cd6d78f8388dafaa08953dd1e8c5490007`. Run `python inference.py 'ગુજરાતીમાં ટૂંકો જવાબ આપો.'` for the standalone model. Use `--adapter-mode` for the compact adapter or `--adapter-revision ed38be6643a3f7d5f94cee9b12c09aa54cddee51` for the original release.

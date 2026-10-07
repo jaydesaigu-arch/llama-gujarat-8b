@@ -2,5 +2,11 @@
   "model_repo": "DesaiJayM/Llama-Gujarat-8B",
   "adapter_revision": "ed38be6643a3f7d5f94cee9b12c09aa54cddee51",
   "adapter_sha256": "150c261d6b05e2f40efe01b131b29283ed527278d5cdcdb56f19f6a3e90081e2",
-  "base_revision": "0e9e39f249a16976918f6564b8830bc894c89659"
+  "base_revision": "0e9e39f249a16976918f6564b8830bc894c89659",
+  "model_revision": "731b42cd6d78f8388dafaa08953dd1e8c5490007",
+  "format": "Standalone BF16 merged LoRA checkpoint",
+  "full_weight_bytes": 16060556376,
+  "adapter_subfolder": "adapter",
+  "full_parameter_finetuning": false,
+  "conversion_optimizer_steps": 0
 }
